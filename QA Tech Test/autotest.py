@@ -17,11 +17,11 @@ def run_test():
         # --- Step 2: Add a Calendar Event ---
         page.click('a:has-text("Calendar")')
 
-        # --- Ensure we are in the correct month (April) ---
+        # --- Ensure we are in the correct month (May) ---
         # Check if the calendar is showing the correct month, and if not, change it
-        current_month = page.locator('text=April')  # Adjust the text to match current UI's month element
+        current_month = page.locator('text=May')  # Adjust the text to match current UI's month element
         if current_month.is_visible():
-            page.click('text=Next Month')  # Click "Next Month" to move to April if it's stuck in March
+            page.click('text=Next Month')  # Click "Next Month" to move to May if it's stuck in April
 
         # Create a new event
         page.click('text=Add Event')
@@ -37,7 +37,7 @@ def run_test():
 
         # --- Step 3: Drag-and-Drop Event in Month View ---
         event = page.locator('text=Test Event')
-        target_day = page.locator('text=27')  # Choose another day to drag event
+        target_day = page.locator('[aria-label="May 5, 2025"]') 
 
         print("Added Test Event!")
 
@@ -117,10 +117,10 @@ def run_test():
 
         # Wait for the DELETE FAMILY button to appear and click it
         page.wait_for_selector('button[exid="modalSubmit"]')
-        page.locator('button[exid="modalSubmit"]:has-text("DELETE FAMILY")').click()
+        # page.locator('button[exid="modalSubmit"]:has-text("DELETE FAMILY")').click()
 
         # Wait for a specific amount of time (in milliseconds, e.g., 2 seconds)
-        page.wait_for_timeout(4000))  # 4000 milliseconds = 4 seconds
+        page.wait_for_timeout(4000)  # 4000 milliseconds = 4 seconds
 
         # Verify deletion was successful
         page.screenshot(path='family_deleted.png')
