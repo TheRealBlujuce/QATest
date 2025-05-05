@@ -67,7 +67,7 @@ def run_test():
         page.locator('text=Day View').click()
 
         page.locator('button:has(span:has-text("Next month"))').click()
-        page.locator('button:has(span:has-text("Next month"))').click()
+        # page.locator('button:has(span:has-text("Next month"))').click()
 
         # Ensure that the page has fully switched to the Day View before proceeding
         page.wait_for_selector('td.fc-timegrid-slot[data-time="10:00:00"]', timeout=5000)  # Wait until the 10 AM slot is available
@@ -107,29 +107,27 @@ def run_test():
         else:
             print("Button inside <li> not found.")
 
-        # page.click('text=Remove Willem M from Family')
         page.click('text=Delete Family')
         page.fill('input[name="Password"]', 'IcuI4cu4Fam!')
 
-        ## Wait for the Authenticate button to appear and click it
+        # ## Wait for the Authenticate button to appear and click it
         page.wait_for_selector('button[exid="modalSubmit"]')
         page.locator('button:has-text("Authenticate")').click()
 
-        # Wait for the DELETE FAMILY button to appear and click it
+        # # Wait for the DELETE FAMILY button to appear and click it
         page.wait_for_selector('button[exid="modalSubmit"]')
-        # page.locator('button[exid="modalSubmit"]:has-text("DELETE FAMILY")').click()
+        page.locator('button[exid="modalSubmit"]:has-text("DELETE FAMILY")').click()
 
         # Wait for a specific amount of time (in milliseconds, e.g., 2 seconds)
-        page.wait_for_timeout(4000)  # 4000 milliseconds = 4 seconds
+        page.wait_for_timeout(2500)  # 2500 milliseconds = 2.5 seconds
 
         # Verify deletion was successful
         page.screenshot(path='family_deleted.png')
 
+        page.wait_for_timeout(1000)  # 1000 milliseconds = 1 second
+
         # # --- Step 6: Attempt to Re-Log In ---
-        page.click('text=Logout')
-        
-        # Attempt to login again after deletion
-        page.click('text=Login')
+        page.locator('a:has-text("sign in to your account")').click()
         page.fill('input[name="Email"]', 'willmarda@outlook.com')
         page.fill('input[name="Password"]', 'IcuI4cu4Fam!')
         page.click('button:text("Sign In")')
