@@ -24,7 +24,6 @@ def run_test():
             page.click('text=Next Month')  # Click "Next Month" to move to April if it's stuck in March
 
         # Create a new event
-
         page.click('text=Add Event')
         page.fill('input[name="Name"]', 'Test Event')
         page.fill('input[name="Location/Note"]', 'Home')  # Adjust date as necessary
@@ -61,7 +60,6 @@ def run_test():
         # Click the button that contains the "Month View" text to open the dropdown
         button.click()
 
-
         # Wait for the dropdown to appear and ensure it's visible
         page.locator('text=Day View').wait_for(state="visible", timeout=5000)  # Timeout after 5 seconds
 
@@ -83,7 +81,6 @@ def run_test():
         else:
             print("Cound not find 10am")
 
-        
         event.drag_to(time)
         page.screenshot(path='event_moved_3_hours.png')
 
@@ -114,25 +111,19 @@ def run_test():
         page.click('text=Delete Family')
         page.fill('input[name="Password"]', 'IcuI4cu4Fam!')
 
-        page.wait_for_selector('button[exid="modalSubmit"]')
-
         ## Wait for the Authenticate button to appear and click it
+        page.wait_for_selector('button[exid="modalSubmit"]')
         page.locator('button:has-text("Authenticate")').click()
 
-
+        # Wait for the DELETE FAMILY button to appear and click it
         page.wait_for_selector('button[exid="modalSubmit"]')
-        # Wait for the REMOVE WILLEM M button to appear and click it
-        # page.locator('button[exid="modalSubmit"]:has-text("REMOVE WILLEM M")').click()
         page.locator('button[exid="modalSubmit"]:has-text("DELETE FAMILY")').click()
 
         # Wait for a specific amount of time (in milliseconds, e.g., 2 seconds)
-        page.wait_for_timeout(4000))  # 2000 milliseconds = 2 seconds
+        page.wait_for_timeout(4000))  # 4000 milliseconds = 4 seconds
 
+        # Verify deletion was successful
         page.screenshot(path='family_deleted.png')
-
-        # # Verify deletion was successful (e.g., success message)
-        # page.wait_for_selector('text=Family deleted successfully')
-        # assert 'Family deleted successfully' in page.text_content()
 
         # # --- Step 6: Attempt to Re-Log In ---
         page.click('text=Logout')
@@ -144,10 +135,10 @@ def run_test():
         page.click('button:text("Sign In")')
 
         # # Verify login fails
-        # page.wait_for_selector('text=Account no longer exists')  # Adjust message as per app behavior
-        # assert 'Account no longer exists' in page.text_content()
 
         page.wait_for_timeout(2000)  # 2000 milliseconds = 2 seconds
+
+        page.screenshot(path='no_login.png')
 
         # Cleanup
         browser.close()
